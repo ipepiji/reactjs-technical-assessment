@@ -4,8 +4,9 @@ import { AutoComplete } from "antd";
 import { selectMapper } from "utils/helpers/mapper";
 
 const SearchBar = ({
-  storeInputLog,
+  currLog,
   storeSearchLog,
+  setCurrLog,
   getOptions,
   labelKey,
   valueKey,
@@ -14,7 +15,6 @@ const SearchBar = ({
 
   const handleSearch = (input) => {
     if (input.trim()) {
-      storeInputLog(input);
       getOptions(input)
         .then((res) => {
           setOptions(
@@ -24,6 +24,10 @@ const SearchBar = ({
               valueKey,
             })
           );
+          const search_results = res.map((obj) => obj[valueKey]);
+          const log = { search_results, input };
+          setCurrLog(log);
+          storeSearchLog(log);
         })
         .catch((error) => {
           console.error(error);
@@ -32,9 +36,8 @@ const SearchBar = ({
     } else setOptions([]);
   };
 
-  const handleSelect = (input) => {
-    storeInputLog(input);
-    storeSearchLog(input);
+  const handleSelect = (selected) => {
+    storeSearchLog({ ...currLog, selected });
   };
 
   return (

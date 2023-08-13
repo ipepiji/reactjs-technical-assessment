@@ -1,7 +1,7 @@
-function logBuilder(input) {
+function logBuilder(obj) {
   return {
+    ...obj,
     timestamp: new Date(),
-    input,
   };
 }
 

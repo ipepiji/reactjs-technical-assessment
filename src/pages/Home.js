@@ -1,15 +1,17 @@
 import { useRef } from "react";
+import { useSelector } from "react-redux";
 import { Space } from "antd";
 
 import googleMap from "services/googleMap";
 import SearchBar from "utils/components/SearchBar";
 import ListContainer from "utils/components/ListContainer";
 import useSearchLogger from "utils/hooks/useSearchLogger";
+import { objectSorter } from "utils/helpers/sorter";
 
 const Home = () => {
+  const data = useSelector((state) => state.logs.data);
   const sessionTokenRef = useRef();
-  const { inputLog, searchLog, storeInputLog, storeSearchLog } =
-    useSearchLogger();
+  const { currLog, storeSearchLog, setCurrLog } = useSearchLogger();
 
   const getOptions = (input) => {
     return googleMap.getSuggestions(input, sessionTokenRef);
@@ -18,13 +20,20 @@ const Home = () => {
   return (
     <Space direction="vertical" size="large" className="component-gap">
       <SearchBar
-        storeInputLog={storeInputLog}
+        currLog={currLog}
         storeSearchLog={storeSearchLog}
+        setCurrLog={setCurrLog}
         getOptions={getOptions}
         labelKey="description"
         valueKey="description"
       />
-      <ListContainer data={searchLog} />
+      <ListContainer
+        data={objectSorter({
+          data,
+          valueKey: "timestamp",
+          order: "DESC",
+        })}
+      />
     </Space>
   );
 };

@@ -1,12 +1,17 @@
-.page-section {
-    height: 100vh;
+.header-section {
+    color: white;
+}
+
+.content-section {
+    height: calc(100vh - 64px);
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    .page-container {
+    .content-container {
         width: inherit;
+        margin: 10px;
         max-width: 1000px;
 
         .component-gap {

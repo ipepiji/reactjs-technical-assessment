@@ -1,13 +1,20 @@
-import PageContainer from "utils/components/PageContainer";
+import { Layout } from "antd";
+
+import ContentContainer from "utils/components/ContentContainer";
 import ContentRoutes from "routes/ContentRoutes";
+
+const { Header, Content } = Layout;
 
 const OneColumnLayout = () => {
   return (
-    <div className="page-section">
-      <PageContainer>
-        <ContentRoutes />
-      </PageContainer>
-    </div>
+    <Layout>
+      <Header className="header-section">Google Place Autocomplete</Header>
+      <Content className="content-section">
+        <ContentContainer>
+          <ContentRoutes />
+        </ContentContainer>
+      </Content>
+    </Layout>
   );
 };
 
